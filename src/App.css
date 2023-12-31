@@ -13,7 +13,6 @@ body {
 .grid {
   display: grid;
   grid: repeat(4, 120px)/repeat(4,120px);
-  background-size: 480px;
   background-repeat:no-repeat;
   margin:40px 20px;
 }
