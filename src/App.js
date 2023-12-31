@@ -1,23 +1,43 @@
-import logo from './logo.svg';
+import {useState} from 'react';
 import './App.css';
 
 function App() {
+  const [table, setTable] = useState([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]);
+  const [isEnd, setIsEnd] = useState(false);
+  const [times, setTimes] = useState(0);
+
+  const preload = new Image();
+  preload.src = './assets/images/odd.png';
+
+  function turn(index) {
+    if(isEnd) return;
+
+    setTimes(times+1);
+
+    const newTable = [...table];
+    newTable[index]++;
+
+    // 上にセルがある場合
+    if(index > 3) newTable[index-4]++;
+    // 右にセルがある場合
+    if( (index+1) % 4 !== 0) newTable[index+1]++;
+    // 下にセルがある場合
+    if(index < 12) newTable[index+4]++;
+    // 左にセルがある場合
+    if( (index) % 4 !== 0) newTable[index-1]++;
+
+    const judgement = newTable.reduce((acc,cur)=>(cur%2!==0)?acc-1:acc,newTable.length)
+    if(judgement <= 0) setIsEnd(true);
+    setTable(newTable);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={isEnd?'app end':'app'}>
+      <div className='howto'><h2>Flip all panels</h2><p>If you tap a panel, tapped panel and its neighbor panels will be fliped.</p><p>全てのパネルをひっくり返そう！</p></div>
+      <div className="grid">
+        {table.map((item,index)=><div className={table[index]%2===0?'cell even':'cell odd'} onClick={()=>{turn(index)}} style={{backgroundPosition:`${index%4*-120}px ${Math.floor(index/4)*-120}px`}}></div>)}
+      </div>
+      {isEnd && <div className='congrat'><h1>Congraturations!</h1><p>You turned panels {times} times.</p><p>{times}回 パネルをひっくり返しました。</p></div>}
     </div>
   );
 }

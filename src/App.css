@@ -1,38 +1,58 @@
-.App {
+body {
+  background: #333;
+  display:grid;
+  justify-content: center;
+  padding-top: 40px;
+  min-height: 100vh;
+}
+
+.app {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.grid {
+  display: grid;
+  grid: repeat(4, 120px)/repeat(4,120px);
+  background-size: 480px;
+  background-repeat:no-repeat;
+  margin:40px 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.cell {
+  background-size: 480px;
+  background-repeat:no-repeat;
+  border: 1px solid #fff6;
+  cursor: pointer;
+  transition:
+    background-image 200ms ease-out,
+    border 1000ms ease-out;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.cell:hover {
+  filter:brightness(1.5);
 }
 
-.App-link {
-  color: #61dafb;
+.end .cell {
+  border: none;
+  cursor: default;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.end .cell:hover {
+  filter: none;
+}
+
+.cell.even {
+  background-image: url('./assets/images/even.png');
+}
+
+.cell.odd {
+  background-image: url('./assets/images/odd.png');
+}
+
+.congrat {
+  color: #16cd0f;
+}
+
+.howto {
+  color: #cdb90f;
 }
