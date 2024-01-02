@@ -1,23 +1,30 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import './App.css';
 
 function App() {
+  // 設定群、列数、行数、1パネルの一辺の長さ（正方形）
   const ROW=4, COL=4, SIZ=120;
   const [table, setTable] = useState([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]);
   const [isEnd, setIsEnd] = useState(false);
   const [times, setTimes] = useState(0);
 
-  const preload = new Image();
-  preload.src = './assets/images/odd.png';
+  // 画像のプリロード、useEffectで1回だけ実行する
+  useEffect(()=>{
+    new Image().src = './assets/images/odd.png';
+  })
 
   function turn(index) {
+    // クリア後はガード
     if(isEnd) return;
 
+    // 試行回数をインクリメント
     setTimes(times+1);
 
+    // ミューテーションを発生させるためにシャローコピー
     const newTable = [...table];
-    newTable[index]++;
 
+    // タップされたセルをインクリメント
+    newTable[index]++;
     // 上にセルがある場合
     if(index > (COL-1)) newTable[index-ROW]++;
     // 右にセルがある場合
@@ -27,8 +34,11 @@ function App() {
     // 左にセルがある場合
     if( (index) % ROW !== 0) newTable[index-1]++;
 
+    // テーブル長から奇数のセルの数を引いていって0ならクリア
     const judgement = newTable.reduce((acc,cur)=>(cur%2!==0)?acc-1:acc,newTable.length)
     if(judgement <= 0) setIsEnd(true);
+
+    // テーブルを更新
     setTable(newTable);
   }
 
