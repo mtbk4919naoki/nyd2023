@@ -34,11 +34,11 @@ function App() {
 
   return (
     <div className={isEnd?'app end':'app'}>
-      <div className='howto'><h2>Flip all panels</h2><p>If you tap a panel, tapped panel and its neighbor panels will be fliped.</p><p>全てのパネルをひっくり返そう！</p></div>
+      <div className='howto'><h2>Flip all panels</h2><p>When you tap a panel, tapped panel and its neighbor panels are fliped.</p><p>全てのパネルをひっくり返そう！</p></div>
       <div className="grid">
         {table.map((item,index)=><div className={table[index]%2===0?'cell even':'cell odd'} onClick={()=>{turn(index)}} style={{backgroundPosition:`${index%COL*-SIZ}px ${Math.floor(index/ROW)*-SIZ}px`}}></div>)}
       </div>
-      {isEnd && <div className='congrat'><h1>Congraturations!</h1><p>You turned panels {times} times.</p><p>{times}回 パネルをひっくり返しました。</p></div>}
+      {isEnd && <div className='congrat'><h1>Congraturations!</h1><p>You've turned panels {times} times.</p><p>{times}回 パネルをひっくり返しました。</p></div>}
     </div>
   );
 }
